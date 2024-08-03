@@ -4,6 +4,7 @@
 package br.ufs.dcomp.ExemploTcpJava;
 
 import java.net.*;
+import java.util.Scanner;
 import java.io.*;
 public class TCPServer{
     public static void main(String[] args){
@@ -18,9 +19,11 @@ public class TCPServer{
             System.out.println("[OK] ]");
             
             InputStream is = sock.getInputStream(); //Canal de entrada de dados
-            OutputStream os = sock.getOutputStream(); //Canal de saída de dados
-            byte[] buf = new byte[20]; // buffer de recepção
+            OutputStream os = sock.getOutputStream(); // Canal de saída de dados
 
+            
+            byte[] buf = new byte[50]; // buffer de recepção
+            
             System.out.print("[ Aguardando recebimento de mensagem   ..............  ");
             is.read(buf); // Operação bloqueante (aguardando chegada de dados)
             System.out.println("[OK] ]");
@@ -28,6 +31,15 @@ public class TCPServer{
             String msg = new String(buf); // Mapeando vetor de bytes recebido para String
             
             System.out.println("  Mensagem recebida: "+ msg);
+            
+            Scanner sc = new Scanner(System.in);
+
+            String resp_msg = sc.nextLine();
+            buf = resp_msg.getBytes(); 
+            
+            os.write(buf);
+            
+            
         }catch(Exception e){System.out.println(e);}    
         System.out.println("[ FIM ]");
     }
